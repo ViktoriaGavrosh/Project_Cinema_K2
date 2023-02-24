@@ -110,8 +110,8 @@ fun readRowsSeatsString():String {
         res = readRowsSeatsString()
     }
     return res
-}
-//print a menu
+} 
+
 fun goMenu(theatre: Theatre) {
     var n = false
     while(true){
