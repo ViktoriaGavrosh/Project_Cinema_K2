@@ -6,7 +6,8 @@ class Theatre(val rows: Int, val seats: Int) {
     var currentIncome = 0
     val totalIncome = countTotalIncome()
     val isBigHall: Boolean = if ((hall.size - 1) * (hall[0].size - 1) <= 60) false else true
-
+    var countRepeat = 0
+    
     fun buildHall(): Array<Array<String>> {
         val arr = Array(rows + 1) { Array(seats + 1) { "S" }}
         arr[0][0] = " "
@@ -20,7 +21,7 @@ class Theatre(val rows: Int, val seats: Int) {
         return(arr)
     } 
     
-    fun countTotalIncome(): Int {
+        fun countTotalIncome(): Int {
         val sumSeat = rows * seats
         if (sumSeat <= 60) {
             return (sumSeat * 10)
@@ -55,8 +56,11 @@ class Theatre(val rows: Int, val seats: Int) {
             buyTicket()
         } catch(e: Exception) {
             println("Wrong input!\n")
+            countRepeat++
+            if (countRepeat == 3) return
             buyTicket()
         }   
+        countRepeat = 0
     }
     
     fun pay(rowChoose: Int, seatChoose: Int) {
@@ -77,7 +81,7 @@ class Theatre(val rows: Int, val seats: Int) {
         countBuyTicket++
     }
     
-    fun printStatistics() {            
+   fun printStatistics() {            
         println("Number of purchased tickets: $countBuyTicket")         
         println("Percentage: ${percent()}%")
         println("Current income: \$$currentIncome")
@@ -90,7 +94,7 @@ class Theatre(val rows: Int, val seats: Int) {
     }
 }
 
-fun main() {
+ fun main() {
     val(r, s) = readRowsSeatsString().split(" ")
     val theatre = Theatre(r.toInt(), s.toInt())
  
@@ -117,14 +121,19 @@ fun goMenu(theatre: Theatre) {
     while(true){
         printMenu()
         println("")
-        when(readLine()!!) {
-            "1" -> theatre.showSeats()
-            "2" -> theatre.buyTicket()
-            "3" -> theatre.printStatistics()
-            else -> n = true
+        try {
+            when(readLine()!!) {
+                "1" -> theatre.showSeats()
+                "2" -> theatre.buyTicket()
+                "3" -> theatre.printStatistics()
+                else -> n = true
+            }
+        } catch(e: Exception) {
+            n = true
         }
         if(n) break
     }
 }
 
 fun printMenu() = println("\n1. Show the seats\n2. Buy a ticket\n3. Statistics\n0. Exit")
+
