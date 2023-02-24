@@ -29,7 +29,8 @@ class Theatre(val rows: Int, val seats: Int) {
             return res.toInt()
         }
     }
-    
+
+    //visualization of the seating position
     fun showSeats() {
         println("Cinema:")
         for(i in hall) {
@@ -110,7 +111,7 @@ fun readRowsSeatsString():String {
     }
     return res
 }
-
+//print a menu
 fun goMenu(theatre: Theatre) {
     var n = false
     while(true){
